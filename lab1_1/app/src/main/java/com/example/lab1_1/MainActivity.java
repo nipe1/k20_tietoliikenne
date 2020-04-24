@@ -10,6 +10,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -21,16 +22,19 @@ import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
+    TextView coords;
+    TextView geo;
 
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 1;
     private FusedLocationProviderClient fusedLocationClient;
-    TextView coords = (TextView) findViewById(R.id.coords);
-    TextView geo = (TextView) findViewById(R.id.geo);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        coords = (TextView) findViewById(R.id.coords);
+        geo = (TextView) findViewById(R.id.geo);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         getPermission();
         getLocation();
@@ -104,8 +108,7 @@ public class MainActivity extends AppCompatActivity {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // permission was granted, yay! Do the
-                    // contacts-related task you need to do.
+                    getLocation();
                 } else {
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
