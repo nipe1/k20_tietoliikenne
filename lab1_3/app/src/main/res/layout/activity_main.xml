@@ -12,6 +12,7 @@
         android:id="@+id/editAddress"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        android:hint="https://www.oamk.fi"
         />
     <Button
         android:layout_width="0dp"

@@ -30,8 +30,9 @@ public class MainActivity extends AppCompatActivity {
         textFetch = (TextView) findViewById(R.id.textFetch);
     }
 
-    private void connectURL(){
-        URL url = new URL("http://www.android.com/");
+    private void connectURL() throws IOException{
+
+        URL url = new URL(editAddress.getText().toString());
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         try {
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         return sb.toString();
     }
 
-    public void buttonGo(View v){
+    public void buttonGo(View v) throws IOException{
         inURL = editAddress.getText().toString();
         connectURL();
     }
