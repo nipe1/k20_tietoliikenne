@@ -1,10 +1,12 @@
-package com.example.lab3_2;
+package com.example.lab4_1;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -15,19 +17,29 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class CompetitionActivity extends AppCompatActivity {
 
     private ArrayList<String> leagues = new ArrayList<>();
     ListView listView;
+    TextView textView;
+    String areaID;
+    String url = "https://api.football-data.org/v2/competitions?areas=";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intent intent = getIntent();
+        Bundle bundle = getIntent().getExtras();
+        areaID = bundle.getString("message");
         listView = (ListView) findViewById(R.id.listView);
+        textView = (TextView) findViewById(R.id.test);
+        textView.setText(areaID);
+        url = url + areaID;
         getJSON();
         arrayAdapt();
     }
@@ -38,9 +50,7 @@ public class MainActivity extends AppCompatActivity {
         listView.setAdapter(aa);
     }
 
-    private void getJSON(){
-        String url = "https://api.football-data.org/v2/competitions?areas=2072";
-
+    private void getJSON() {
         RequestQueue queue = Volley.newRequestQueue(this);
 
         final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
@@ -48,14 +58,14 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        try{
+                        try {
                             JSONArray competitions = response.getJSONArray("competitions");
 
-                            for(int i=0;i<competitions.length();i++){
+                            for (int i = 0; i < competitions.length(); i++) {
                                 JSONObject val = competitions.getJSONObject(i);
                                 leagues.add(val.get("name").toString());
                             }
-                        } catch (Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
@@ -69,5 +79,4 @@ public class MainActivity extends AppCompatActivity {
                 });
         queue.add(jsonObjectRequest);
     }
-
 }
