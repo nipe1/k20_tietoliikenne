@@ -37,11 +37,8 @@ public class CompetitionActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         areaID = bundle.getString("message");
         listView = (ListView) findViewById(R.id.listView);
-        textView = (TextView) findViewById(R.id.test);
-        textView.setText(areaID);
         url = url + areaID;
         getJSON();
-        arrayAdapt();
     }
 
     private void arrayAdapt() {
@@ -65,6 +62,7 @@ public class CompetitionActivity extends AppCompatActivity {
                                 JSONObject val = competitions.getJSONObject(i);
                                 leagues.add(val.get("name").toString());
                             }
+                            arrayAdapt();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

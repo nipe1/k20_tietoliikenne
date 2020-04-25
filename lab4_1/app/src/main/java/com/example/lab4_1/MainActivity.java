@@ -35,21 +35,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         listView = (ListView) findViewById(R.id.listView);
-        textView = (TextView) findViewById(R.id.test);
         getJSON();
-        arrayAdapt();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapter, View v, int position, long id) {
                 String val = listView.getItemAtPosition(position).toString();
                 String areaID = ids.get(leagues.indexOf(val));
-                textView.setText(areaID);
                 Intent intent = new Intent(MainActivity.this, CompetitionActivity.class);
 
                 intent.putExtra("message", areaID);
                 //based on item add info to intent
-                //startActivity(intent);
+                startActivity(intent);
             }
         });
     }
@@ -78,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
                                 leagues.add(val.get("name").toString());
                                 ids.add(val.get("id").toString());
                             }
+
+                            arrayAdapt();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -86,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // TODO: Handle error
+                        textView.setText("error");
 
                     }
                 });
